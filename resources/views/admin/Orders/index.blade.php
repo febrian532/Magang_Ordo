@@ -12,7 +12,6 @@
                 <th>Tanggal Pesanan</th>
                 <th>Total Harga</th>
                 <th>Status</th>
-                <th>Dibuat Pada</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -28,12 +27,11 @@ $(function () {
         serverSide: true,
         ajax: '{{ route('admin.orders.data') }}',
         columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchchable: fable },
-            { data: 'pemesan', name: 'user.name' },
-            { data: 'tanggal_pesanan', name: 'created_at' },
-            { data: 'total_harga', name: 'total_price' },
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'pemesan', name: 'pemesan' },
+            { data: 'tanggal_pesanan', name: 'tanggal_pesanan' },
+            { data: 'total_harga', name: 'total_harga' },
             { data: 'status', name: 'status' },
-            { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ]
     });

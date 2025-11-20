@@ -1,27 +1,34 @@
-
 <?php
+
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\AuthController;
 
-Route::prefix('admin')->group(function () {
-    // USERS
-    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
-    Route::get('/users/data', [UserController::class, 'getData'])->name('admin.users.data');
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    // CATEGORIES
-    Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
-    Route::get('/categories/data', [CategoryController::class, 'getData'])->name('admin.categories.data');
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // PRODUCTS
-    Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
-    Route::get('/products/data', [ProductController::class, 'getData'])->name('admin.products.data');
+    // Users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/data', [UserController::class, 'getData'])->name('users.data');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
-    // ORDERS
-    Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('/orders/data', [OrderController::class, 'getData'])->name('admin.orders.data');
+    // Categories
+    Route::get('/categories/data', [CategoryController::class, 'getData'])->name('categories.data');
+    Route::resource('categories', CategoryController::class);
 
-    Route::post('/payment/create', [PaymentController::class, 'createTransaction'])->name('payment.create');
+    // Products
+    Route::get('/products/data', [ProductController::class, 'getData'])->name('products.data');
+    Route::resource('products', ProductController::class);
+
+    // Orders
+    Route::get('/orders/data', [OrderController::class, 'getData'])->name('orders.data');
+    Route::resource('orders', OrderController::class);
+
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
