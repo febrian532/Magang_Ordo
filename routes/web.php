@@ -12,23 +12,46 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Users
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    /*
+    |------------------------------------------------------------------
+    | Users
+    |------------------------------------------------------------------
+    */
     Route::get('/users/data', [UserController::class, 'getData'])->name('users.data');
-    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::resource('users', UserController::class)
+        ->only(['index', 'show', 'edit', 'update']);  // <= tambahkan edit & update
 
-    // Categories
-    Route::get('/categories/data', [CategoryController::class, 'getData'])->name('categories.data');
+    /*
+    |------------------------------------------------------------------
+    | Categories
+    |------------------------------------------------------------------
+    */
+    Route::get('/categories/data', [CategoryController::class, 'getData'])
+        ->name('categories.data');
     Route::resource('categories', CategoryController::class);
 
-    // Products
-    Route::get('/products/data', [ProductController::class, 'getData'])->name('products.data');
+    /*
+    |------------------------------------------------------------------
+    | Products
+    |------------------------------------------------------------------
+    */
+    Route::get('/products/data', [ProductController::class, 'getData'])
+        ->name('products.data');
     Route::resource('products', ProductController::class);
 
-    // Orders
-    Route::get('/orders/data', [OrderController::class, 'getData'])->name('orders.data');
+    /*
+    |------------------------------------------------------------------
+    | Orders
+    |------------------------------------------------------------------
+    */
+    Route::get('/orders/data', [OrderController::class, 'getData'])
+        ->name('orders.data');
     Route::resource('orders', OrderController::class);
 
-    // Logout
+    /*
+    |------------------------------------------------------------------
+    | Auth
+    |------------------------------------------------------------------
+    */
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

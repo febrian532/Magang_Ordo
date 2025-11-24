@@ -1,8 +1,9 @@
-@extends('layouts.admin')
+@extends('admin.layouts.app')
 
 @section('content')
 <div class="container mt-4">
     <h3>Daftar Pengguna</h3>
+
     <table id="users-table" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -21,7 +22,7 @@
 @push('scripts')
 <script>
 $(function() {
-    $('#users-table').DataTable({
+    let table = $('#users-table').DataTable({
         processing: true,
         serverSide: true,
         ajax: '{{ route('admin.users.data') }}',

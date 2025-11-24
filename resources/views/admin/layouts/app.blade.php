@@ -1,29 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard - @yield('title')</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #1f2937;
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 25px;
+            background: #f5f6fa;
+        }
+    </style>
+
+    @stack('styles')
 </head>
-
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-    <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Dashboard</a>
 
-    <div class="ms-auto d-flex gap-3">
-        <a class="nav-link text-white" href="{{ route('admin.products.index') }}">Products</a>
-        <a class="nav-link text-white" href="{{ route('admin.categories.index') }}">Categories</a>
-        <a class="nav-link text-white" href="{{ route('admin.users.index') }}">Users</a>
-        <a class="nav-link text-white" href="{{ route('admin.orders.index') }}">Orders</a>
+    @include('admin.layouts.sidebar')
 
-        <form action="{{ route('admin.logout') }}" method="POST">
-            @csrf
-            <button class="btn btn-danger btn-sm">Logout</button>
-        </form>
+    <div class="content">
+        @yield('content')
     </div>
-</nav>
 
-<div class="container mt-4">
-    @yield('content')
-</div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    @stack('scripts')
 </body>
 </html>

@@ -1,8 +1,13 @@
-@extends('layouts.admin')
+@extends('admin.layouts.app')
 
 @section('content')
 <div class="container mt-4">
-    <h3>Daftar Produk</h3>
+    <h3 class="mb-3">Daftar Produk</h3>
+
+    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">
+        + Tambah Produk
+    </a>
+
     <table id="products-table" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -21,11 +26,15 @@
 
 @push('scripts')
 <script>
-$(function() {
-    $('#products-table').DataTable({
+$(document).ready(function() {
+
+    // ==============================
+    // DATATABLE
+    // ==============================
+    let table = $('#products-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: '{{ route('admin.products.data') }}',
+        ajax: "{{ route('admin.products.data') }}",
         columns: [
             { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'name', name: 'name' },
@@ -36,6 +45,30 @@ $(function() {
             { data: 'action', name: 'action', orderable: false, searchable: false },
         ]
     });
+
+    // ==============================
+    // HAPUS PRODUK
+    // ==============================
+    $(document).on('click', '.delete', function () {
+        const id = $(this).data('id');
+
+        if (!confirm("Yakin ingin menghapus produk ini?")) return;
+
+        $.ajax({
+            url: "/admin/products/" + id,
+            type: "DELETE",
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            success: function (res) {
+                if (res.status === "success") {
+                    alert("Produk berhasil dihapus");
+                    table.ajax.reload(); // reload datatable
+                }
+            }
+        });
+    });
+
 });
 </script>
 @endpush
